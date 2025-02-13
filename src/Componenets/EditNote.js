@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 const EditNote = () => {
   const navigate=useNavigate();
@@ -12,10 +13,14 @@ const EditNote = () => {
   
 async function submitHandler(e){
     e.preventDefault();
-   
+   try{
     const res=await axios.post("http://localhost:8080/api/editnote", { title,content ,noteid});
 //    console.log(res.data.message)
+    toast.success(res.data.message)
    navigate('/Home')
+   }catch(error){
+    toast.error(error.response.data.messagee)
+   }
   }
 
   return (

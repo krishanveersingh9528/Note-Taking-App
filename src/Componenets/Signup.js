@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from "axios";
 import { useNavigate,Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
   const navigate=useNavigate();
@@ -12,14 +13,16 @@ const Signup = () => {
          try{
           const res=await axios.post("http://localhost:8080/api/signup", { username, email,password });
         
-          console.log(res.data.message);
-          navigate('/login');
+          // console.log(res.data.message);
+          
           setEmail("")
           setPassword("")
           setUsername("");
+          navigate('/login');
+          toast.success(res.data.message)
          }
          catch(error){
-            console.log("Error adding user:", error)
+            toast.error(error.response.data.message)
          }
     }
   return (
